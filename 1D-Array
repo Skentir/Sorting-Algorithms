@@ -69,8 +69,18 @@ void quicksort(array *a, int low, int high) {
         quicksort(a, pIndex + 1, high);
     }
 }
-
-void bubbleSort(array a)
+void selectionsort(array a) {
+     int i, j, min;
+     for(i = 0; i < a.length-1; i++) {
+		min = i;
+		for(j = i+1; j < a.length; j++) {
+			if(a.values[j] < a.values[min])
+				min = j;
+		}
+		swap(&a.values[i], &a.values[min]);
+	}
+}
+void bubblesort(array a)
 {
 	int nTemp;
 	
@@ -85,16 +95,25 @@ void bubbleSort(array a)
 }
 int main() {
 
-    printf("Before Bubble Sort:\n");
+    printf("\nBefore Bubble Sort:\n");
     array a = createArray(5);
     randomizeArray(a);
     printArray(a);
     printf("After Bubble Sort:\n");
-    bubbleSort(a);
+    bubblesort(a);
     printArray(a);
     deleteArray(a);
     
-    printf("Before Quicksort:\n");
+    printf("\nBefore Selection Sort:\n");
+    array a = createArray(5);
+    randomizeArray(a);
+    printArray(a);
+    printf("After Selection Sort:\n");
+    selectionsort(a);
+    printArray(a);
+    deleteArray(a);
+    
+    printf("\nBefore Quicksort:\n");
     array a = createArray(5);
     randomizeArray(a);
     printArray(a);
