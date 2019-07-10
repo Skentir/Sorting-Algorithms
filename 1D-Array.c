@@ -22,7 +22,6 @@ void deleteArray(array a) {
 void randomizeArray(array a) {
     int i;
 
-    srand((unsigned int)time(NULL));
     for (i = 0; i < a.length; i++)
         a.values[i] = rand() | rand() << 15;
 }
@@ -144,6 +143,8 @@ void mergesort(array a) {
 
 int main() {
     array a;
+
+    srand((unsigned int)time(NULL));
 
     printf("\nBefore Bubble Sort:\n");
     a = createArray(5);
