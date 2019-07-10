@@ -1,3 +1,4 @@
+#include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -85,10 +86,11 @@ void selectionsort(array a) {
 /* BUBBLE SORT ALGORITHM */
 void bubblesort(array a) {
 	int nTemp;
+    int i, j;
 
 	for (i = 0; i < a.length; i++) {	          // will repeat checking every element up to the array's size to compare all elements to one another
         for (j = 0; j < a.length; j++) {          // compares an element (j) to the one beside it (j+1),						a switch will occur only if the element at j is greater than the element at j+1
-        	if (a.values[j] > a.values[j + 1] && j + 1 < nSize) //	only compare elements (j's value) until nSize - 1
+        	if (a.values[j] > a.values[j + 1] && j + 1 < a.length) //	only compare elements (j's value) until nSize - 1
         		swap(&a.values[j], &a.values[j + 1]);
         }
 	}
