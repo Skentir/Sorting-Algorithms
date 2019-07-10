@@ -94,9 +94,57 @@ void bubblesort(array a) {
 	}
 }
 
+/* MERGE SORT ALGORITHM */
+void merge(array a, int p, int q, int r) {
+	int i, j, k;
+
+	int n1 = q - p + 1;
+	int n2 = r - q;
+	array L = createArray(n1+1);
+	array R = createArray(n2+1);
+	for (i = 0; i < n1; i++)
+		L.values[i] = a.values[p + i];
+	for (j = 0; j < n2; j++)
+		R.values[j] = a.values[q + j + 1];
+
+	L.values[n1] = INT32_MAX;
+	R.values[n2] = INT32_MAX;
+
+	i = 0;
+	j = 0;
+	for (k = p; k <= r; k++) {
+		if (L.values[i] <= R.values[j]) {
+			a.values[k] = L.values[i];
+			i++;
+		} else {
+			a.values[k] = R.values[j];
+			j++;
+		}
+	}
+
+	deleteArray(L);
+	deleteArray(R);
+}
+
+void mergesort_do(array a, int p, int r) {
+	int q;
+	if (p < r) {
+		q = (p + r) / 2;
+		mergesort_do(a, p, q);
+		mergesort_do(a, q + 1, r);
+		merge(a, p, q, r);
+	}
+}
+
+void mergesort(array a) {
+	mergesort_do(a, 0, a.length - 1);
+}
+
 int main() {
+    array a;
+
     printf("\nBefore Bubble Sort:\n");
-    array a = createArray(5);
+    a = createArray(5);
     randomizeArray(a);
     printArray(a);
     printf("After Bubble Sort:\n");
@@ -105,7 +153,7 @@ int main() {
     deleteArray(a);
 
     printf("\nBefore Selection Sort:\n");
-    array a = createArray(5);
+    a = createArray(5);
     randomizeArray(a);
     printArray(a);
     printf("After Selection Sort:\n");
@@ -114,11 +162,20 @@ int main() {
     deleteArray(a);
 
     printf("\nBefore Quicksort:\n");
-    array a = createArray(5);
+    a = createArray(5);
     randomizeArray(a);
     printArray(a);
     printf("After Quicksort:\n");
     quicksort(&a, 0, a.length-1);
+    printArray(a);
+    deleteArray(a);
+
+    printf("\nBefore Mergesort:\n");
+    a = createArray(5);
+    randomizeArray(a);
+    printArray(a);
+    printf("After Mergesort:\n");
+    mergesort(a);
     printArray(a);
     deleteArray(a);
 
