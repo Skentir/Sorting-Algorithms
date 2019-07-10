@@ -1,0 +1,2 @@
+# compiler output should not affect the repository
+*.exe
