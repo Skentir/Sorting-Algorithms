@@ -25,7 +25,7 @@ void randomizeArray(array a) {
     int i;
 
     for (i = 0; i < a.length; i++)
-        a.values[i] = rand() | rand() << 15;
+        a.values[i] = rand() % 500;
 }
 
 void printArray(array a) {
@@ -143,6 +143,26 @@ void mergesort(array a) {
 	mergesort_do(a, 0, a.length - 1);
 }
 
+void insertionSort(array a)
+{
+	int nTemp;//		initalizes value at i = 0
+	int nSpace;//		takes note of the index where there nTemp took the values
+	int arrSize = a.length;
+	
+	
+	int i, j;
+	
+	for(i = 0; i < arrSize; i++)//		compare against all values in the array
+	{
+		for(j = i; j > 0 ; j--)//		sorts the array into two parts	~> sorted||unsorted
+		{
+			 if(a.values[j-1] > a.values[j])//		if the curr value in the unsorted partition is bigger than the one below it (both sorted
+			 {							// 			and unsorted), initiate a swap	
+			 	swap(&a.values[j], &a.values[j-1]);
+			 }
+		}
+	}
+}
 int main() {
     array a;
 
@@ -174,7 +194,16 @@ int main() {
     quicksort(&a, 0, a.length-1);
     printArray(a);
     deleteArray(a);
-
+	
+	printf("\nBefore Insertion Sort:\n");
+    a = createArray(5);
+    randomizeArray(a);
+    printArray(a);
+    printf("After Insertion Sort:\n");
+    insertionSort(a);
+    printArray(a);
+    deleteArray(a);
+    
     printf("\nBefore Mergesort:\n");
     a = createArray(5);
     randomizeArray(a);
