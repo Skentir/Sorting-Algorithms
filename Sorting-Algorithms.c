@@ -146,7 +146,7 @@ void mergesort(array a) {
 void insertionSort(array a)
 {
 	int nTemp;//		initalizes value at i = 0
-	int nSpace;//		takes note of the index where there nTemp took the values
+	
 	int arrSize = a.length;
 	
 	
@@ -156,8 +156,8 @@ void insertionSort(array a)
 	{
 		for(j = i; j > 0 ; j--)//		sorts the array into two parts	~> sorted||unsorted
 		{
-			 if(a.values[j-1] > a.values[j])//		if the curr value in the unsorted partition is bigger than the one below it (both sorted
-			 {							// 			and unsorted), initiate a swap	
+			 if(a.values[j-1] > a.values[j])//if the curr value in the unsorted partition is bigger than the one below it (both sorted
+			 {//				and unsorted), initiate a swap	
 			 	swap(&a.values[j], &a.values[j-1]);
 			 }
 		}
