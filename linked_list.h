@@ -104,7 +104,7 @@ void SwapByData(int *a, int *b)
 /* Exchanges data stored in linked list */
 void SwapByPtr(Node **cur, Node **tail)
 {
-    Node *tmp = (*cur)->next;
+     Node *tmp = (*cur)->next;
     (*cur)->next = NULL;
     (*tail)->next = *cur;
     *tail = *cur;
@@ -137,12 +137,7 @@ Node* Partition(Node *start, Node *end, Node **tmpStart, Node **tmpEnd)
         {
             if (prev)
                 prev->next = curr->next;
-         //   SwapByPtr(&prev, &curr);
-            Node *tmp = curr->next;
-            curr->next = NULL;
-            tail->next = curr;
-            tail = curr;
-            curr = tmp;
+            SwapByPtr(&curr, &tail);
         }
     }
     if(*tmpStart == NULL)
