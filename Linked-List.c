@@ -1,15 +1,24 @@
 #include <stdio.h>
+#include <stdlib.h>
 
-typedef struct{
+typedef struct {
     int nodeVariable;
-    Node nextNode;
+	struct Node* (nextNode);
 }Node;
 
-/*Node *n;
-n = (Node*) malloc(sizeof(Node) * linkSize);
-
-*/
-
+typedef struct {
+    struct Node* (nodes);
+    int linkSize;
+}LinkedList;
+    
+LinkedList createList(int nSize){
+    LinkedList linkList;
+    
+    linkList.linkSize = nSize;
+    linkList.nodes = (Node*) malloc(sizeof(Node) * nSize);
+    
+    return linkList;
+}
 int main() {
     return 0;
 }
