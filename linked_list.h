@@ -4,20 +4,22 @@
 #include <stdbool.h>
 #include <time.h>
 #include <stdlib.h>
+#include <stdio.h>
+
 typedef struct node {
     int data;
     struct node* next;
 } Node;
 
-void Push(Node **head, int data)
+void Push(Node* (*head), int data)
 {
-    Node* new = (Node*)malloc(sizeof(Node));
+    Node* new = (Node*) malloc(sizeof(Node));
     new->data = data;
-    new->next = *head;
+    new->next = NULL;
     *head = new;
 }
 
-void createList(Node** head, int length)
+void createList(Node* (*head), int length)
 {
     int data;
     while (length > 0)
@@ -34,8 +36,11 @@ void createList(Node** head, int length)
 int ListLength(Node* head)
 {
     int count = 0;
-    for(Node* curr = head; curr != NULL; curr = curr->next)
+    Node* curr;
+    
+    for(curr = head; curr != NULL; curr = curr->next)
         count++;
+        
     return count;
 };
 
@@ -61,8 +66,10 @@ Node* AddToHead(int data)
 void display(Node *head)
 {
     int i=1;
+    int nVal = 0;
     while(head != NULL)
     {
+    	nVal = head->data;
         printf("%d -> ", head->data);
         i++;
 
@@ -102,7 +109,7 @@ void SwapByData(int *a, int *b)
 }
 
 /* Exchanges data stored in linked list */
-void SwapByPtr(Node **cur, Node **tail)
+void SwapByPtr(Node* (*cur), Node* (*tail))
 {
      Node *tmp = (*cur)->next;
     (*cur)->next = NULL;
