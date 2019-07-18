@@ -49,6 +49,54 @@ void swap(int *a, int *b) {
     *b = temp;
 }
 
+/**
+     * Hoare partition scheme.
+     * The original partition scheme described by C.A.R. Hoare uses two indices that start at
+     * the ends of the array being partitioned, then move toward each other, until they detect
+     * an inversion
+     *
+     * Hoare's scheme is more efficient than Lomuto's partition scheme because it does three
+     * times fewer swaps on average, and it creates efficient partitions even when all values
+     * are equal.
+     *  Source: https://github.com/ljp215/algorithm/blob/master/src/main/java/com/zane/algorithm/QuickSort.java
+     */
+void quicksort2(array *a, int low, int high)
+{
+    if (low < high)
+    {
+        int indx = low+high/2;
+        int pivot = a->values[indx];
+        /* Pivot is swapped with last */
+        a->values[indx] = a->values[high];
+        a->values[high] = pivot;
+
+        int i = low -1;
+        int j = high;
+
+        do {
+            do{i++;} while (a->values[i] < pivot);
+            /*Cannot be out of bounds as a[high] contains the pivot, so it will stop advancing afterwards*/
+            do{j--;} while((a->values[j]> pivot) && (j >low));
+            if(i < j) {
+                swap(&a->values[i], &a->values[j]);
+            }
+        } while (i < j);
+
+        a->values[high] = a->values[i];
+        a->values[i] = pivot;
+
+        quicksort2(a, low, i-1);
+        quicksort2(a, i+1, high);
+
+    }
+}
+/**
+     * Lomuto partition scheme.
+     * This scheme is attributed to Nico Lomuto and popularized by Bentley in his book
+     * Programming Pearls
+     * Source: https://github.com/ljp215/algorithm/blob/master/src/main/java/com/zane/algorithm/QuickSort.java
+ */
+
 int partition(array a, int low, int high) {
     int i, pivot = a.values[high];
     int pIndex = low;
@@ -62,14 +110,14 @@ int partition(array a, int low, int high) {
     return pIndex;
 }
 
-void quicksort(array *a, int low, int high) {
+void quicksort1(array *a, int low, int high) {
     int pIndex;
     if (low < high) {
         pIndex = partition(*a, low, high);
-        quicksort(a, low, pIndex - 1);
-        quicksort(a, pIndex + 1, high);
+        quicksort1(a, low, pIndex - 1);
+        quicksort1(a, pIndex + 1, high);
     }
-}
+ }
 
 /* SELECTION SORT ALGORITHM */
 void selectionsort(array a) {
@@ -186,16 +234,25 @@ int main() {
     printArray(a);
     deleteArray(a);
 
-    printf("\nBefore Quicksort:\n");
+    printf("\nBefore Quicksort 1:\n");
     a = createArray(5);
     randomizeArray(a);
     printArray(a);
-    printf("After Quicksort:\n");
-    quicksort(&a, 0, a.length-1);
+    printf("After Quicksort 1:\n");
+    quicksort1(&a, 0, a.length-1);
+    printArray(a);
+    deleteArray(a);
+
+    printf("\nBefore Quicksort 2:\n");
+    a = createArray(5);
+    randomizeArray(a);
+    printArray(a);
+    printf("After Quicksort 2:\n");
+    quicksort2(&a, 0, a.length-1);
     printArray(a);
     deleteArray(a);
 	
-	printf("\nBefore Insertion Sort:\n");
+    printf("\nBefore Insertion Sort:\n");
     a = createArray(5);
     randomizeArray(a);
     printArray(a);
