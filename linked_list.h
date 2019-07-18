@@ -11,23 +11,26 @@ typedef struct node {
     struct node* next;
 } Node;
 
-void Push(Node* (*head), int data)
+Node *createNode(int value)
 {
-    Node* new = (Node*) malloc(sizeof(Node));
-    new->data = data;
-    new->next = NULL;
-    *head = new;
+	Node *node = (Node*) malloc(sizeof(Node));
+	node->data = value;
+	node->next = NULL;
+	return node;
 }
 
-void createList(Node* (*head), int length)
+void createList(Node **head, int length)
 {
-    int data;
-    while (length > 0)
-    {
-        data = rand() | rand() << 15;
-        Push(head, data);
-        length--;
-    }
+	Node *node = createNode(rand() | rand() << 15);
+	*head = node;
+	length--;
+	
+	while (length > 0)
+	{
+		node->next = createNode(rand() | rand() << 15);
+		node = node->next;
+		length--;
+	}
 }
 /* Returns the number of nodes in the list
  * Head pointer copied to local variable curr and iterates the list
@@ -192,28 +195,6 @@ int validateList(Node *head, int count)
 	}
 	
 	return count == counter;
-}
-
-Node *createNode(int value)
-{
-	Node *node = (Node*) malloc(sizeof(Node));
-	node->data = value;
-	node->next = NULL;
-	return node;
-}
-
-void createList2(Node **head, int length)
-{
-	Node *node = createNode(rand() | rand() << 15);
-	*head = node;
-	length--;
-	
-	while (length > 0)
-	{
-		node->next = createNode(rand() | rand() << 15);
-		node = node->next;
-		length--;
-	}
 }
 
 void deleteList(Node **node)
