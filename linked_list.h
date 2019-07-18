@@ -58,20 +58,20 @@ Node* TailNode(Node *curr)
 Node* AddToHead(int data)
 {
  Node* head = NULL;
- int i;
+ //int i;
  /*insert for loop to move all nodes via Push() */
     return  head;
 }
 
 void display(Node *head)
 {
-    int i=1;
-    int nVal = 0;
+    //int i=1;
+    //int nVal = 0;
     while(head != NULL)
     {
-    	nVal = head->data;
+    	//nVal = head->data;
         printf("%d -> ", head->data);
-        i++;
+        //i++;
 
         head = head->next;
     }
@@ -104,7 +104,7 @@ void SwapByData(int *a, int *b)
 {
     int temp = *a;
     *a = *b;
-    *b = *a;
+    *b = temp;
 
 }
 
@@ -172,3 +172,93 @@ Node* QuickSortData(Node* head, Node* end) {
     pivot->next = QuickSortData(pivot->next, newEnd);
     return newHead;
 }
+
+/*
+ * Checks if the linked list is sorted (in ascending order) and contains the
+ * right number of nodes ( == count)
+ */
+int validateList(Node *head, int count)
+{
+	int value = head->data;
+	int counter = 1;
+	head = head->next;
+	while (head != NULL)
+	{
+		if (value > head->data)
+			return 0;
+		value = head->data;
+		head = head->next;
+		counter++;
+	}
+	
+	return count == counter;
+}
+
+Node *createNode(int value)
+{
+	Node *node = (Node*) malloc(sizeof(Node));
+	node->data = value;
+	node->next = NULL;
+	return node;
+}
+
+void createList2(Node **head, int length)
+{
+	Node *node = createNode(rand() | rand() << 15);
+	*head = node;
+	length--;
+	
+	while (length > 0)
+	{
+		node->next = createNode(rand() | rand() << 15);
+		node = node->next;
+		length--;
+	}
+}
+
+void deleteList(Node **node)
+{
+	while (*node != NULL)
+	{
+		Node *next = (*node)->next;
+		free(*node);
+		*node = next;
+	}
+	
+	*node = NULL;
+}
+
+#ifdef _WIN32
+#include <windows.h>
+
+/*
+ * Do not forget to initialize the clock so the timer would work.
+ */
+double frequency;
+void initClock()
+{
+	LARGE_INTEGER _frequency;
+	QueryPerformanceFrequency(&_frequency);
+	frequency = (double)_frequency.QuadPart;
+}
+
+double millis()
+{
+	LARGE_INTEGER _count;
+	QueryPerformanceCounter(&_count);
+	double count = (double)_count.QuadPart;
+	return count / frequency * 1000.0;
+}
+
+#else
+
+/* clock() is found to have lower precision than the time APIs provided by operating systems */
+
+void initClock() {}
+
+double millis()
+{
+	return (double)clock() / CLOCKS_PER_SEC * 1000.0;
+}
+
+#endif
