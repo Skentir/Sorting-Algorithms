@@ -1,6 +1,63 @@
 #include <stdio.h>
 #include "linked_list.h"
 
+// BEGIN QUICK SORT
+
+Node* QuickSortPtr(Node* head)
+{
+    if(head == NULL || head->next == NULL)
+        return head;
+    Node *pivot = TailNode(head); // O(n)
+    Node *left = NULL, *right = NULL;
+}
+
+Node* Partition(Node *start, Node *end, Node **tmpStart, Node **tmpEnd)
+{
+    Node *pivot = end, *prev = NULL, *curr = start, *tail = pivot;
+
+    while(curr != pivot)
+    {
+        if(curr->data < pivot->data)
+        {
+            if(*tmpStart == NULL)
+                *tmpStart = curr;
+            prev = curr;
+            curr = curr->next;
+        } else
+        {
+            if (prev)
+                prev->next = curr->next;
+            SwapByPtr(&curr, &tail);
+        }
+    }
+    if(*tmpStart == NULL)
+        *tmpStart = pivot;
+    *tmpEnd = tail;
+    return pivot;
+}
+
+Node* QuickSortData(Node* head, Node* end) {
+    if (head == NULL || head->next == NULL)
+        return head;
+    Node *newHead = NULL, *newEnd = NULL;
+    Node *pivot = Partition(head, end, &newHead, &newEnd);
+
+    if (newHead != pivot)
+    {
+        Node *tmp = newHead;
+        while(tmp->next != pivot)
+            tmp = tmp->next;
+        tmp->next = NULL;
+        newHead = QuickSortData(newHead, tmp);
+        tmp = TailNode(newHead);
+        tmp->next = pivot;
+    }
+    pivot->next = QuickSortData(pivot->next, newEnd);
+    return newHead;
+}
+
+// END QUICK SORT
+
 // BEGIN MERGE SORT
 
 Node *middleNode(Node *a, Node *b)
@@ -89,6 +146,7 @@ int main() {
     Node *head = NULL, *tmp;
 	double start, time;
 	
+	initRandom();
 	initClock();
 	
 	length = 2;
