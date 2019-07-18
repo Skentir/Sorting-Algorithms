@@ -87,6 +87,9 @@ int main() {
     printf("grease is the best musical fite me\n");
     int i, length;
     Node *head = NULL, *tmp;
+	double start, time;
+	
+	initClock();
 	
 	length = 2;
 	printf("Testing quicksort:\n");
@@ -95,14 +98,18 @@ int main() {
 		createList(&head, length);
 		//printf("Before sorting:\n");
 		//display(head);
-		tmp = QuickSortData(head, TailNode(head));
+		start = millis();
+		head = QuickSortData(head, TailNode(head));
+		time = millis() - start;
 		//printf("After sorting:\n");
 		//display(tmp);
 		if (!validateList(head, length)) {
 			printf("Bad list!\n");
+			display(head);
 			//return 1;
 		} else {
 			printf("Good!\n");
+			printf("Time taken is %lf ms\n", time);
 		}
 		deleteList(&head);
 		length *= 2;
@@ -115,14 +122,18 @@ int main() {
 		createList(&head, length);
 		//printf("Before sorting:\n");
 		//display(head);
+		start = millis();
 		mergesort(&head);
+		time = millis() - start;
 		//printf("After sorting:\n");
 		//display(tmp);
 		if (!validateList(head, length)) {
 			printf("Bad list!\n");
+			display(head);
 			//return 1;
 		} else {
 			printf("Good!\n");
+			printf("Time taken is %lf ms\n", time);
 		}
 		deleteList(&head);
 		length *= 2;
