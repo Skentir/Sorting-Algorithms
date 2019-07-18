@@ -1,13 +1,7 @@
 #include <stdio.h>
 #include "linked_list.h"
 
-// BEGIN MERGE SORT 1
-
-
-
-// END MERGE SORT 1
-
-// BEGIN MERGE SORT 2
+// BEGIN MERGE SORT
 
 Node *middleNode(Node *a, Node *b)
 {
@@ -87,18 +81,53 @@ void mergesort(Node **head)
 	mergesort_do(head, &tail);
 }
 
-// END MERGE SORT 2
+// END MERGE SORT
 
 int main() {
     printf("grease is the best musical fite me\n");
-    int length = 5;
-    Node *head = NULL;
-    createList(&head, length);
-    display(head);
-    printf("\nQuicksort by swapping data: \n");
-    Node *tmp = QuickSortData(head, TailNode(head));
-    display(tmp);
-    printf("\nQuicksort by swapping pointers: \n");
+    int i, length;
+    Node *head = NULL, *tmp;
+	
+	length = 2;
+	printf("Testing quicksort:\n");
+	for (i = 0; i < 23; i++) {
+		printf("Create list of %d nodes:\n", length);
+		createList(&head, length);
+		//printf("Before sorting:\n");
+		//display(head);
+		tmp = QuickSortData(head, TailNode(head));
+		//printf("After sorting:\n");
+		//display(tmp);
+		if (!validateList(head, length)) {
+			printf("Bad list!\n");
+			//return 1;
+		} else {
+			printf("Good!\n");
+		}
+		deleteList(&head);
+		length *= 2;
+	}
+	
+	length = 2;
+	printf("Testing mergesort:\n");
+	for (i = 0; i < 23; i++) {
+		printf("Create list of %d nodes:\n", length);
+		createList(&head, length);
+		//printf("Before sorting:\n");
+		//display(head);
+		mergesort(&head);
+		//printf("After sorting:\n");
+		//display(tmp);
+		if (!validateList(head, length)) {
+			printf("Bad list!\n");
+			//return 1;
+		} else {
+			printf("Good!\n");
+		}
+		deleteList(&head);
+		length *= 2;
+	}
+	
     return 0;
 }
 

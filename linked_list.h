@@ -78,7 +78,7 @@ void display(Node *head)
 
         head = head->next;
     }
-    printf(" NULL");
+    printf("NULL\n");
 }
 /* Very first node is added to the head pointer
  * All following nodes are inserted after using a tail pointer
