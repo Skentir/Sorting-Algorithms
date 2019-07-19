@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include "linked_list.h"
 
-// BEGIN QUICK SORT
+// BEGIN LOMUTO QUICK SORT
 
 Node* QuickSortPtr(Node* head)
 {
@@ -56,7 +56,69 @@ Node* QuickSortData(Node* head, Node* end) {
     return newHead;
 }
 
-// END QUICK SORT
+// END LOMUTO QUICK SORT
+
+// BEGIN WEGNER QUICK SORT
+void Append(Node **curr, Node **head, Node **tail)
+{
+    if (head == NULL) {
+        *curr = NULL;
+        return;
+    }
+    else if (*head == NULL)
+    {
+        *head = *tail = *curr;
+    }
+    else
+    {
+        (*tail)->next = *curr;
+        *tail = (*tail)->next;
+    }
+
+    Node *tmp = (*curr)->next;
+    (*curr)->next = NULL;
+    *curr = tmp;
+}
+void Join(Node **first, Node **second, Node **third, Node **fourth) {
+   if (*first == NULL && *second == NULL)
+       *first = *second = *third;
+   else if ( *third == NULL && *fourth == NULL)
+        *third = *fourth = *second;
+   else
+       (*second)->next = *third;
+}
+void QuickSortTRI(Node **head, Node **end)
+{
+
+    Node *lesHead = NULL, *lesEnd = NULL;
+    Node *equHead = NULL, *equEnd = NULL;
+    Node *larHead = NULL, *larEnd = NULL;
+    Node *curr = *head;
+    if (curr == NULL)
+        return;
+    int pivot, info;
+    pivot = curr->data;
+    Append(&curr, &equHead, &equEnd);
+
+    while (curr != NULL)
+    {
+        info = curr->data;
+        if (info < pivot)
+            Append(&curr, &lesHead, &lesEnd);
+        else if (info > pivot)
+            Append(&curr, &larHead, &larEnd);
+        else
+            Append(&curr, &equHead, &equEnd);
+    }
+
+    QuickSortTRI(&lesHead, &lesEnd);
+    QuickSortTRI(&larHead, &larEnd);
+    Join(&lesHead, &lesEnd, &equHead, &equEnd);
+    Join(&lesHead, &equEnd, &larHead, &larEnd);
+    *head = lesHead;
+    *end = larEnd;
+}
+// END WEGNER QUICK SORT
 
 // BEGIN MERGE SORT 2
 /*
