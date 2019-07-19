@@ -240,6 +240,39 @@ void bubbleSortList(Node **head)
 	}
 }
 //END BUBBLE SORT
+//START INSERTION SORT
+void insertionSortList(Node **head)
+{
+	int nTemp;
+	Node *currNode, *inSorter;
+	
+	inSorter = *head;
+	currNode = (*head)->next;
+
+	
+	while(currNode != NULL)
+	{
+		inSorter = *head;
+		while(inSorter->next != currNode)
+		{
+			if(inSorter->data > currNode->data)
+			{
+				nTemp = inSorter->data;
+				inSorter->data = currNode->data;
+				currNode->data = nTemp;
+				
+				*head = inSorter;
+			}
+			else
+			{
+                inSorter = inSorter->next;
+            }
+		}
+		currNode = currNode->next;
+	}
+}
+
+//END INSERTION SORT
 int main() {
     printf("grease is the best musical fite me\n");
     int i, length;
