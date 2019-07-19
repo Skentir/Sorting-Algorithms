@@ -3,14 +3,6 @@
 
 // BEGIN LOMUTO QUICK SORT
 
-Node* QuickSortPtr(Node* head)
-{
-    if(head == NULL || head->next == NULL)
-        return head;
-    Node *pivot = TailNode(head); // O(n)
-    Node *left = NULL, *right = NULL;
-}
-
 Node* Partition(Node *start, Node *end, Node **tmpStart, Node **tmpEnd)
 {
     Node *pivot = end, *prev = NULL, *curr = start, *tail = pivot;
@@ -258,7 +250,7 @@ void bubbleSortList(Node **head)
 	Node *prevNode = NULL;
 	Node *currNode = *head;
 	Node *nextNode = (*head)->next;
-	Node *temp, *oldHead; 
+	Node *temp; 
 	int bVal = 0;
 	
 	while(bVal == 0)
@@ -302,6 +294,9 @@ void bubbleSortList(Node **head)
 	}
 }
 
+//END BUBBLE SORT
+//START INSERTION SORT
+
 void insertSorted(Node **head, Node *node)
 {
 	if (*head == NULL)
@@ -333,8 +328,6 @@ void insertSorted(Node **head, Node *node)
 	}
 }
 
-//END BUBBLE SORT
-//START INSERTION SORT
 void insertionSortList(Node **head)
 {
 	Node *start = NULL;
@@ -347,37 +340,6 @@ void insertionSortList(Node **head)
 		curr = tmp;
 	}
 	
-	/*
-	int nTemp;
-	Node *permaHead = head;
-	Node *currIndex = permaHead;
-	
-	head = head->next;
-	
-	while(head != NULL)
-	{
-		currIndex = permaHead;
-		 while(currIndex->next != head){
-
-            if (currIndex->data > head->data){
-
-                nTemp = head->data;
-                head->data = currIndex->data;
-                currIndex->data = nTemp;
-
-            }else{
-
-                currIndex = currIndex->next;
-
-            }
-
-        }
-
-        head = head->next;
-
-	}
-    */
-	
 	*head = start;
 }
 
@@ -385,7 +347,7 @@ void insertionSortList(Node **head)
 int main() {
     printf("grease is the best musical fite me\n");
     int i, length;
-    Node *head = NULL, *tmp;
+    Node *head = NULL;
 	double start, time;
 	
 	initRandom();
@@ -393,7 +355,7 @@ int main() {
 	
 	length = 2;
 	printf("Testing bubblesort:\n");
-	for (i = 0; i < 5; i++) {
+	for (i = 0; i < 20; i++) {
 		printf("Create list of %d nodes:\n", length);
 		createList(&head, length);
 		//printf("Before sorting:\n");
@@ -417,7 +379,7 @@ int main() {
 	
 	length = 2;
 	printf("Testing insertion sort:\n");
-	for (i = 0; i < 15; i++) {
+	for (i = 0; i < 20; i++) {
 		printf("Create list of %d nodes:\n", length);
 		createList(&head, length);
 		//printf("Before sorting:\n");

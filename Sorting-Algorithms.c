@@ -277,6 +277,7 @@ void insertionSort(array a)
 }
 int main() {
     array a;
+	double start, time;
 
     srand((unsigned int)time(NULL));
 
@@ -285,7 +286,9 @@ int main() {
     randomizeArray(a);
     printArray(a);
     printf("After Bubble Sort:\n");
+	start = millis();
     bubblesort(a);
+	time = millis() - start;
     printArray(a);
     deleteArray(a);
 
