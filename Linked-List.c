@@ -139,7 +139,56 @@ void mergesort(Node **head)
 }
 
 // END MERGE SORT
-
+// START BUBBLE SORT
+void bubbleSortList(Node **head)
+{
+	Node *prevNode = NULL;
+	Node *currNode = *head;
+	Node *nextNode = (*head)->next;
+	Node *temp, *oldHead; 
+	int bVal = 0;
+	
+	while(bVal == 0)
+	{
+		prevNode = NULL;
+		currNode = (*head);
+		nextNode = (*head)->next;
+		bVal = 1;	
+		while(nextNode != NULL)
+		{
+			if(currNode->data > nextNode->data)
+			{
+				temp = nextNode->next;
+				nextNode->next = currNode;
+				currNode->next = temp;
+				
+				if(prevNode != NULL)
+				{
+					prevNode->next = nextNode;	
+				}
+				else
+				{
+					*head = nextNode;
+				}
+				
+				prevNode = nextNode;
+				nextNode = currNode->next;
+				
+				bVal = 0;
+				
+				
+			}
+			else
+			{
+				prevNode = currNode;
+				
+				currNode = currNode->next;
+				nextNode = nextNode->next;
+			}
+		}
+	}
+}
+//END BUBBLE SORT
 int main() {
     printf("grease is the best musical fite me\n");
     int i, length;
