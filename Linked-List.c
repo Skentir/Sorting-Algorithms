@@ -301,37 +301,84 @@ void bubbleSortList(Node **head)
 		}
 	}
 }
+
+void insertSorted(Node **head, Node *node)
+{
+	if (*head == NULL)
+	{
+		*head = node;
+		node->next = NULL;
+	}
+	else
+	{
+		Node *prev = NULL;
+		Node *curr = *head;
+		
+		while (curr != NULL && curr->data < node->data)
+		{
+			prev = curr;
+			curr = curr->next;
+		}
+		
+		if (prev == NULL)
+		{
+			node->next = *head;
+			*head = node;
+		}
+		else
+		{
+			prev->next = node;
+			node->next = curr;
+		}
+	}
+}
+
 //END BUBBLE SORT
 //START INSERTION SORT
 void insertionSortList(Node **head)
 {
-	int nTemp;
-	Node *currNode, *inSorter;
+	Node *start = NULL;
+	Node *curr = *head;
 	
-	inSorter = *head;
-	currNode = (*head)->next;
-
-	
-	while(currNode != NULL)
+	while (curr != NULL)
 	{
-		inSorter = *head;
-		while(inSorter->next != currNode)
-		{
-			if(inSorter->data > currNode->data)
-			{
-				nTemp = inSorter->data;
-				inSorter->data = currNode->data;
-				currNode->data = nTemp;
-				
-				*head = inSorter;
-			}
-			else
-			{
-                inSorter = inSorter->next;
-            }
-		}
-		currNode = currNode->next;
+		Node *tmp = curr->next;
+		insertSorted(&start, curr);
+		curr = tmp;
 	}
+	
+	/*
+	int nTemp;
+	Node *permaHead = head;
+	Node *currIndex = permaHead;
+	
+	head = head->next;
+	
+	while(head != NULL)
+	{
+		currIndex = permaHead;
+		 while(currIndex->next != head){
+
+            if (currIndex->data > head->data){
+
+                nTemp = head->data;
+                head->data = currIndex->data;
+                currIndex->data = nTemp;
+
+            }else{
+
+                currIndex = currIndex->next;
+
+            }
+
+        }
+
+        head = head->next;
+
+	}
+    */
+	
+	*head = start;
 }
 
 //END INSERTION SORT
@@ -370,7 +417,7 @@ int main() {
 	
 	length = 2;
 	printf("Testing insertion sort:\n");
-	for (i = 0; i < 5; i++) {
+	for (i = 0; i < 15; i++) {
 		printf("Create list of %d nodes:\n", length);
 		createList(&head, length);
 		//printf("Before sorting:\n");
