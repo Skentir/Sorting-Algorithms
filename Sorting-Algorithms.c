@@ -146,6 +146,7 @@ void bubblesort(array a) {
 }
 
 /* MERGE SORT ALGORITHM */
+/*
 void merge(array a, int p, int q, int r) {
 	int i, j, k;
 
@@ -171,6 +172,69 @@ void merge(array a, int p, int q, int r) {
 			a.values[k] = R.values[j];
 			j++;
 		}
+	}
+
+	deleteArray(L);
+	deleteArray(R);
+}
+
+void mergesort_do(array a, int p, int r) {
+	int q;
+	if (p < r) {
+		q = (p + r) / 2;
+		mergesort_do(a, p, q);
+		mergesort_do(a, q + 1, r);
+		merge(a, p, q, r);
+	}
+}
+
+void mergesort(array a) {
+	mergesort_do(a, 0, a.length - 1);
+}
+*/
+void merge(array a, int p, int q, int r) {
+	int i, j, k;
+	
+	// a b c d e
+	// p = 0, q = 2, r = 4
+	
+	int n1 = q - p + 1;
+	int n2 = r - q;
+	array L = createArray(n1);
+	array R = createArray(n2);
+	for (i = 0; i < n1; i++)
+		L.values[i] = a.values[p + i];
+	for (j = 0; j < n2; j++)
+		R.values[j] = a.values[q + j + 1];
+	/*
+	for (k = p; k <= r; k++) {
+		if (L.values[i] <= R.values[j]) {
+			a.values[k] = L.values[i];
+			i++;
+		} else {
+			a.values[k] = R.values[j];
+			j++;
+		}
+	}
+	*/
+	i = 0;
+	j = 0;
+	while (i < n1 && j < n2) {
+		if (L.values[i] <= R.values[j]) {
+			a.values[k] = L.values[i];
+			i++;
+		} else {
+			a.values[k] = R.values[j];
+			j++;
+		}
+	}
+	while (i < n1) {
+		a.values[k] = L.values[i];
+		i++;
+	}
+	while (j < n2) {
+		a.values[k] = R.values[j];
+		j++;
 	}
 
 	deleteArray(L);

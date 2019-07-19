@@ -58,6 +58,57 @@ Node* QuickSortData(Node* head, Node* end) {
 
 // END QUICK SORT
 
+// BEGIN MERGE SORT 2
+
+Node *merge2(Node *head1, Node *head2)
+{
+	Node *front = NULL, *back = NULL;
+	while (front1 != stop1 && front2 != stop2) {
+		if (front1->data <= front2->data) {
+			append(&front1, &front, &back);
+		} else {
+			append(&front2, &front, &back);
+		}
+	}
+	
+	while (front1 != stop1) {
+		append(&front1, &front, &back);
+	}
+	while (front2 != stop2) {
+		append(&front2, &front, &back);
+	}
+	
+	back->next = stop2;
+	
+	*head = front;
+	*tail = back;
+}
+
+void append(Node **curr, Node **head, Node **tail);
+void mergesort2(Node **head)
+{
+	Node *list1Head = NULL;
+	Node *list1Tail = NULL;
+	Node *list2Head = NULL;
+	Node *list2Tail = NULL;
+	
+	if (*head == NULL || (*head)->next == NULL)
+		return;
+	
+	while (*head != NULL) {
+		append(head, &list1Head, &list1Tail);
+		if (*head != NULL)
+			append(head, &list2Head, &list2Tail);
+	}
+	
+	mergesort2(&list1Head);
+	mergesort2(&list2Head);
+	
+	*head = merge2(list1Head, list2Head);
+}
+
+// END MERGE SORT 2
+
 // BEGIN MERGE SORT
 
 Node *middleNode(Node *a, Node *b)
@@ -140,6 +191,55 @@ void mergesort(Node **head)
 
 // END MERGE SORT
 
+// START BUBBLE SORT
+
+Node* bubbleSortList(Node* head)
+{
+	Node *first = head;
+	Node *second;
+	Node *newHead = head;
+	
+	Node *prevNode = NULL; 
+	Node *tempNode = NULL;
+	
+	Node *jNext = NULL;
+	
+	int count = 0, swaps = -1;
+	while(swaps != 0)
+	{
+		swaps = 0;
+		prevNode = NULL;
+		first = newHead;
+		second = first->next;
+		while(second != NULL)
+		{
+			if (first->data > second->data)
+			{
+				jNext = second->next;
+				second->next = first;
+				first->next = jNext;
+				swaps++;
+				
+				tempNode = first;
+				first = second;
+				second = tempNode;
+			}
+				
+			if(prevNode != NULL)
+				prevNode->next = first;
+			else
+				newHead = first;
+			prevNode = first;
+			
+			first = first->next;
+			second = second->next;
+		}
+	}
+	return newHead;
+}
+
+//END BUBBLE SORT
+
 int main() {
     printf("grease is the best musical fite me\n");
     int i, length;
@@ -148,6 +248,30 @@ int main() {
 	
 	initRandom();
 	initClock();
+	
+	length = 2;
+	printf("Testing bubblesort:\n");
+	for (i = 0; i < 15; i++) {
+		printf("Create list of %d nodes:\n", length);
+		createList(&head, length);
+		//printf("Before sorting:\n");
+		//display(head);
+		start = millis();
+		head = bubbleSortList(head);
+		time = millis() - start;
+		//printf("After sorting:\n");
+		//display(head);
+		if (!validateList(head, length)) {
+			printf("Bad list!\n");
+			display(head);
+			//return 1;
+		} else {
+			printf("Good!\n");
+			printf("Time taken is %lf ms\n", time);
+		}
+		deleteList(&head);
+		length *= 2;
+	}
 	
 	length = 2;
 	printf("Testing quicksort:\n");
