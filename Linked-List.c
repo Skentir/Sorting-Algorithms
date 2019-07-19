@@ -190,56 +190,56 @@ void mergesort(Node **head)
 }
 
 // END MERGE SORT
-
 // START BUBBLE SORT
-
-Node* bubbleSortList(Node* head)
+void bubbleSortList(Node **head)
 {
-	Node *first = head;
-	Node *second;
-	Node *newHead = head;
+	Node *prevNode = NULL;
+	Node *currNode = *head;
+	Node *nextNode = (*head)->next;
+	Node *temp, *oldHead; 
+	int bVal = 0;
 	
-	Node *prevNode = NULL; 
-	Node *tempNode = NULL;
-	
-	Node *jNext = NULL;
-	
-	int count = 0, swaps = -1;
-	while(swaps != 0)
+	while(bVal == 0)
 	{
-		swaps = 0;
 		prevNode = NULL;
-		first = newHead;
-		second = first->next;
-		while(second != NULL)
+		currNode = (*head);
+		nextNode = (*head)->next;
+		bVal = 1;	
+		while(nextNode != NULL)
 		{
-			if (first->data > second->data)
+			if(currNode->data > nextNode->data)
 			{
-				jNext = second->next;
-				second->next = first;
-				first->next = jNext;
-				swaps++;
+				temp = nextNode->next;
+				nextNode->next = currNode;
+				currNode->next = temp;
 				
-				tempNode = first;
-				first = second;
-				second = tempNode;
+				if(prevNode != NULL)
+				{
+					prevNode->next = nextNode;	
+				}
+				else
+				{
+					*head = nextNode;
+				}
+				
+				prevNode = nextNode;
+				nextNode = currNode->next;
+				
+				bVal = 0;
+				
+				
 			}
-				
-			if(prevNode != NULL)
-				prevNode->next = first;
 			else
-				newHead = first;
-			prevNode = first;
-			
-			first = first->next;
-			second = second->next;
+			{
+				prevNode = currNode;
+				
+				currNode = currNode->next;
+				nextNode = nextNode->next;
+			}
 		}
 	}
-	return newHead;
 }
-
 //END BUBBLE SORT
-
 int main() {
     printf("grease is the best musical fite me\n");
     int i, length;
