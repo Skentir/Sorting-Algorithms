@@ -59,7 +59,7 @@ Node* QuickSortData(Node* head, Node* end) {
 // END QUICK SORT
 
 // BEGIN MERGE SORT 2
-
+/*
 Node *merge2(Node *head1, Node *head2)
 {
 	Node *front = NULL, *back = NULL;
@@ -106,7 +106,7 @@ void mergesort2(Node **head)
 	
 	*head = merge2(list1Head, list2Head);
 }
-
+*/
 // END MERGE SORT 2
 
 // BEGIN MERGE SORT
@@ -284,13 +284,37 @@ int main() {
 	
 	length = 2;
 	printf("Testing bubblesort:\n");
-	for (i = 0; i < 15; i++) {
+	for (i = 0; i < 5; i++) {
 		printf("Create list of %d nodes:\n", length);
 		createList(&head, length);
 		//printf("Before sorting:\n");
 		//display(head);
 		start = millis();
-		head = bubbleSortList(head);
+		bubbleSortList(&head);
+		time = millis() - start;
+		//printf("After sorting:\n");
+		//display(head);
+		if (!validateList(head, length)) {
+			printf("Bad list!\n");
+			display(head);
+			//return 1;
+		} else {
+			printf("Good!\n");
+			printf("Time taken is %lf ms\n", time);
+		}
+		deleteList(&head);
+		length *= 2;
+	}
+	
+	length = 2;
+	printf("Testing insertion sort:\n");
+	for (i = 0; i < 5; i++) {
+		printf("Create list of %d nodes:\n", length);
+		createList(&head, length);
+		//printf("Before sorting:\n");
+		//display(head);
+		start = millis();
+		insertionSortList(&head);
 		time = millis() - start;
 		//printf("After sorting:\n");
 		//display(head);
